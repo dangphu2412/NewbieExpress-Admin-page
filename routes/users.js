@@ -1,9 +1,25 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+const router = express.Router();
+
+// Client router
+router.get('/', (req, res) => {
+  return res.render('app/client/index', { title : 'yasuo' });
+});
+
+// Get about page
+router.get('/about', (req, res) => {
+  return res.render('app/client/about', { title : 'about' });
+});
+
+// GET contact page
+router.get('/contact', (req, res) => {
+  return res.render('app/client/contact', { title : 'contact' }); 
+});
+
+// GET post page
+router.get('/post', (req, res) => {
+  return res.render('app/client/post', {title : 'post' });
 });
 
 module.exports = router;

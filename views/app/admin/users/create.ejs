@@ -1,0 +1,86 @@
+<% layout('../../../layouts/admin/product.ejs') -%>
+<div>
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-6 mx-auto">      
+            <!-- general form elements -->
+            <div class="card card-primary ">
+              <div class="card-header">
+                <h3 class="card-title"> Product Type</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <div class="card-body">
+
+                <form role="form" action="/admin/product/create_product" method="POST" enctype="multipart/form-data">
+                  <div class="form-group">
+                        <label>Product Type</label>
+                        <select class="form-control form-control-lg" name="select_type">
+                          <% types.forEach(type => { %>
+                          <option ><%= type.type %></option>
+                          <% }) %>
+                        </select>
+                        <label for="productType">Product name</label>
+                        <input type="text" class="form-control" name="pr_name" id="productName" placeholder="Enter product name">
+                        <p style="color:red; text-transform: capitalize"><%= handlerError('pr_name')%></p>
+                        <label for="productType">Price</label>
+                        <input type="text" class="form-control" name="price" id="productPrice" placeholder="Ex : 10000000">
+                        <p style="color:red; text-transform: capitalize"><%= handlerError('price') %></p>
+                        <label for="productType">Description</label>
+                        <textarea type="text" class="form-control" name="description" id="productDescrip" placeholder="Some description"></textarea>
+                        <p style="color:red; text-transform: capitalize"><%= handlerError('description') %></p>
+                        <label for="exampleInputFile">File input</label>
+                        <div class="pb-3 input-group">
+                          <div class="custom-file">
+                            <input type="file" multiple name="avatar" class="custom-file-input" id="exampleInputFile">
+                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                          </div>        
+                        </div>
+                        <button type="submit" class="btn btn-success">Create</button>
+                  </div>
+                </form>
+                <div class="py-3">
+                    <h4>Create a new product type</h4>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Logout">
+                        Create new
+                    </button>
+                </div>
+              </div>
+            <!-- /.card -->
+              <div class="card-footer">
+                <button class="btn btn-secondary"><a class="text-body" href="/">Back to admin</a></button>
+              </div>
+          </div>
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+<form form class="py-5" role="form" action="/admin/products/create_prtype" method="POST">
+  <div class="modal fade" id="Logout" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Create your new product type</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>   
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="productType">Product Type</label>
+                <input type="text" class="form-control" name="type" id="productType" placeholder="Enter product type name">
+              </div>
+              <p style="color:red; text-transform: capitalize"><%= handlerError('name') %></p>
+            </div>          
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

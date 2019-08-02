@@ -1,0 +1,37 @@
+<% layout('../../../layouts/admin/product.ejs') -%>
+<div>
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-6 mx-auto">      
+            <!-- general form elements -->
+            <div class="card card-primary ">
+              <div class="card-header">
+                <h3 class="card-title"> Product</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <div class="card-body">
+
+                <form role="form" action="" method="POST">
+                    <div class="form-group">
+                        <label for="productType">Product name</label>
+                        <input type="text" class="form-control" name="name" id="productName" placeholder="Enter product name">
+                        <label for="productType">Price</label>
+                        <input type="text" class="form-control" name="price" id="productPrice" placeholder="Enter product name">
+                        <label for="productType">Product name</label>
+                        <input type="text" class="form-control" name="description" id="productDescrip" placeholder="Enter product name">
+                        <p style="color:red; text-transform: capitalize"><%= handlerError('name') %></p>
+                        <button type="submit" class="btn btn-success">Create</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
