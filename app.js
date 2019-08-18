@@ -69,6 +69,10 @@ app.use((req, res, next) => {
   localHelper(res);
   next();
 });
+app.use((req, res, next) => {
+  res.locals.updated = req.flash('updated');
+  next();
+});
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

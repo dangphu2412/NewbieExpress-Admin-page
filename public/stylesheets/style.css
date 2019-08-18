@@ -3,4 +3,5 @@
   height: 200px !important;
   width: auto !important;
   object-fit: cover !important;
+  margin : 10px 5px;
 }
