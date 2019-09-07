@@ -1,0 +1,116 @@
+<% layout('../../../layouts/admin/app.ejs') -%>
+<% stylesheet('/stylesheets/style.css') -%>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Profile</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">User Profile</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+            <div class="col-10 offset-1">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"></h3>
+                    </div>
+                    <form method="POST" action="/admin/posts/create" role="form" class="form-element" id="create-post">
+                        <div class="box-body">                                           
+                                <div class="form-group">  
+                                  <label>Category</label>
+                                  <select class="form-control form-control-lg" name="category">
+                                  <% categorises.forEach(category => { %>
+                                  <option ><%= category.category_name %></option>
+                                  <% }) %>
+                                  </select>  
+                                </div>                              
+                                <div class="form-group">
+                                  <label for="name">Hashtag</label>
+                                  <select class="form-control form-control-lg js-example-basic-single" name="tag_names" multiple="multiple">
+                                    <% tags.forEach(tag => { %>
+                                    <option ><%= tag.tag_name %></option>
+                                    <% }) %>
+                                  </select>  
+                                </div>                                      
+                                <div class="form-group">
+                                    <label>Title</label>
+                                    <input type="text" name="title" class="form-control" placeholder="Title">
+                                    <label>Here is our post</label>  
+                                    <%- handlerError('content') %>                          
+                                    <textarea class="form-control" name="content" id="textPost" rows="20"></textarea>
+                                </div>
+                        </div>
+                        <div class="box-footer text-right">
+                            <button type="submit" class="btn btn-lg btn-warning">Create</button>
+                        </div>
+                    </form>
+                    <!--Create new post-->
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+<% script('/plugins/jquery/jquery.js')%>
+<% script('/plugins/jquery/jquery.min.js') -%>
+<% script('/dist/js/demo.js') -%>
+<% script('/dist/js/main.js') -%>
+<script src="https://cdn.tiny.cloud/1/63151jxlayyh1lx8rzx0v7oeyjffo6iwylvcdswapi5v4qg2/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+  tinymce.init({
+      selector:'#textPost',
+      plugins: [
+        "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+        "searchreplace wordcount visualblocks visualchars code fullscreen",
+        "insertdatetime media nonbreaking save table contextmenu directionality",
+        "emoticons template paste textcolor colorpicker textpattern"
+      ],
+      toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+      toolbar2: "print preview media | forecolor backcolor emoticons",
+      image_advtab: true,
+      images_upload_handler: function (blobInfo, success, failure) {
+        var xhr, formData;
+
+        xhr = new XMLHttpRequest();
+        xhr.withCredentials = false;
+        xhr.open('POST', '/admin/posts/image'); // tao file rieng xu ly anh ve s3 chuyen ve res.json({})
+
+        xhr.onload = function() {
+          var json;
+    
+          if (xhr.status != 200) {
+            failure('HTTP Error: ' + xhr.status);
+            return;
+          }
+   
+          json = JSON.parse(xhr.responseText);
+         
+          if (!json ) {
+            failure('Invalid JSON: ' + xhr.responseText);
+            return;
+          }
+
+          success(json.location);
+        };
+
+        formData = new FormData();
+        formData.append('file', blobInfo.blob(), blobInfo.filename());
+
+        xhr.send(formData);
+  }
+});
+</script>  

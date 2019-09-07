@@ -1,21 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-  <% include ../../layouts/client/partials/head %>
+  <% include partials/head %>
   <%-stylesheets%>
 </head>
-
 <body>
 
-  <% include ../../layouts/client/partials/header %>
-
+  <% include partials/header %>
+  
+  <!-- Content Wrapper. Contains page content -->
   <%-body -%>
+  
+  <% include partials/footer %>
 
-  <% include ../../layouts/client/partials/footer %>
-
-  <% include ../../layouts/client/partials/script %>
-
-</body>
+  <% include partials/script -%>
   <%-scripts%>
+</body>
 </html>

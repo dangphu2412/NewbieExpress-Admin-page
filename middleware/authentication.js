@@ -1,8 +1,8 @@
 const verifyAuth = (req, res, next) => {
-     if (req.session.user) {
-         return next();
-     }
-     return res.redirect('/admin/login');
+    if (req.session.user) {
+        return next();
+    }
+    return res.redirect('/login');
 }
 
 const verifyNotAuth = (req, res, next) => {
@@ -10,9 +10,6 @@ const verifyNotAuth = (req, res, next) => {
         return next();
     }
     return res.redirect('/admin');
-}
-const checkType = (req, res, next) => {
-    
 }
 
 module.exports = { verifyAuth, verifyNotAuth };

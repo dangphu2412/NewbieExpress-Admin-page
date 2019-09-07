@@ -1,0 +1,59 @@
+<% layout('../../layouts/client/client.ejs') -%>
+<% stylesheet('/stylesheets/style.css') -%>
+<header class="masthead" style="background-image: url('/images/about-bg.jpg')">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="site-heading">
+          <h1>Client</h1>
+          <span class="subheading">Page displaying product</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+  <!-- Main Content -->
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto">    
+      <div class="post-preview">
+        <a href="/">
+          <h2 class="post-title">
+            Here are our list category
+          </h2>
+          <h3 class="post-subtitle">
+            It looks good then we should do something with it
+          </h3>
+        </a>
+        <p class="post-meta">Posted by
+          <a href="#">Start Bootstrap</a>
+          on September 24, 2019</p>
+      </div>
+      <hr>
+      <p style="color:green; text-transform: capitalize"><%= updated %></p>
+      <p style="color:red; text-transform: capitalize"><%= handlerError('pr_name')%></p>
+      <p style="color:red; text-transform: capitalize"><%= handlerError('price') %></p>
+      <p style="color:red; text-transform: capitalize"><%= handlerError('description') %></p>
+      <% categories.forEach(category => { %>
+      <div class="post">         
+        <a href="/"><h2 class="post-title">Category name : <span class="text-muted"><%= category.category_name %></span></h2></a> 
+        <p>Some post related :</p>     
+        <% posts.forEach((post) => { if (category.id === post.category_id) { %>
+          <p class="post-meta"><a href="/<%= category.slug %>/<%= post.slug%>"><%= post.title %></a></p>
+        <% }}) %>
+      </div>
+      <hr>
+      <% })%>
+      <!-- Pager -->
+      <div class="clearfix">
+        <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr>
+<% script('/dist/js/demo.js') -%>
+<% script('/dist/js/main.js') -%>

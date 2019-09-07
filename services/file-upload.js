@@ -1,13 +1,14 @@
+require('dotenv').config();
 const AWS = require('aws-sdk');
 const fs = require('fs');
 
 AWS.config.update({
-    accessKeyId: 'AKIAZ5QW6SBBHVAN3LFF',
-    secretAccessKey: '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',
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     region: 'ap-southeast-1'
-})
+});
 
-let s3bucket = new AWS.S3();
+const s3bucket = new AWS.S3();
 const s3Upload = async (file) => {
     const params = {
         Bucket: 'sgroupit-test',

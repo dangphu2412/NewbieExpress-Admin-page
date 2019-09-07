@@ -1,7 +1,19 @@
 .product-img {
-  display: block;
   height: 200px !important;
   width: auto !important;
   object-fit: cover !important;
   margin : 10px 5px;
+}
+.nav-form:hover {
+ color: #fff;
+ background: rgba(255 ,255, 255, .1);
+}
+.nav-form {
+  background: transparent;
+  text-align: left;
+  border: none;
+  font-size: 16px;
+  color: #c2c7d0;
+  margin-bottom: .2rem;
+  padding: .5rem 1rem;
 }

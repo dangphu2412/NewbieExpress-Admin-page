@@ -2,6 +2,7 @@ const { check, validationResult } = require('express-validator');
 
 const checkRegister = [
     check('name')
+      .trim()
       .isLength({ min : 1 })
       .withMessage('Your name is empty'),
     check('username')
@@ -31,4 +32,8 @@ const checkProduct = [
     check('description').trim().isLength({ min: 1 }).withMessage('Don t forget to describe your product')
 ];
 
-module.exports = { checkRegister, checkLogin, checkProduct };
+const checkPost = [
+    check('title').trim().isLength({ min:1 }).withMessage('Title is empty'),
+    check('content').trim().isLength({ min: 10}).withMessage('Your post can not less than 10 character ')
+]
+module.exports = { checkRegister, checkLogin, checkProduct, checkPost };

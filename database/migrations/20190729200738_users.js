@@ -6,6 +6,7 @@ exports.up = function(knex) {
           table.string('username',255).notNullable();
           table.string('email',255).notNullable();
           table.string('password',255).notNullable();
+          table.string('google_id',255);
           table.timestamp('created_at').defaultTo(knex.fn.now());
           table.timestamp('updated_at').defaultTo(knex.fn.now());
       });

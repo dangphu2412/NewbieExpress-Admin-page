@@ -7,9 +7,9 @@ exports.up = function(knex) {
       table.integer('price').unsigned().notNullable();
       table.string('description',255).notNullable();
       table.integer('product_type_id').unsigned().notNullable();
-      table.foreign('product_type_id').references('id').inTable('product_types');
+      table.foreign('product_type_id').references('id').inTable('product_types').onDelete('CASCADE');
       table.integer('author_id').unsigned().notNullable();
-      table.foreign('author_id').references('id').inTable('users');
+      table.foreign('author_id').references('id').inTable('users').onDelete('CASCADE');
       table.timestamp('created_at').defaultTo(knex.fn.now());
       table.timestamp('updated_at').defaultTo(knex.fn.now());
       })

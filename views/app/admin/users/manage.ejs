@@ -1,5 +1,5 @@
 <% layout('../../../layouts/admin/app.ejs') -%>
-
+<% stylesheet('/stylesheets/style.css') -%>
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -27,7 +27,7 @@
               <div class="card-header">
                 <h3 class="card-title">Responsive Hover Table</h3>
                 
-                <button type="button" class="my-3 btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+                <button type="button" class="my-2 btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
                   Create
                 </button>
                 
@@ -112,7 +112,7 @@
                 </div>
               </div>
               <!-- /.card-header -->
-              <div class="card-body table-responsive p-0">
+              <div class="card-body table-responsive p-0 table-hover">
                 <table class="table">
                   <tr>
                     <th>ID</th>
@@ -120,7 +120,9 @@
                     <th>Username</th>
                     <th>Email</th>
                     <th>CreatedAt</th>   
-                    <th>Options</th>              
+                    <th>Detail</th>
+                    <th>Update</th>
+                    <th>Delete</th>            
                   </tr>
                   <% users.forEach(user => { %>
                     <tr>
@@ -130,7 +132,7 @@
                         <td><%= user.email %></td>
                         <td><%= moment(user.created_at).format('DD/MM/YYYY') %></td> 
                         <td>
-                          <button type="button" class="my-3 btn btn-success" data-toggle="modal" data-target="#detail-<%= user.username %>">
+                          <button type="button" class=" btn btn-success" data-toggle="modal" data-target="#detail-<%= user.username %>">
                             Detail
                           </button>  
                           <div class="modal fade" id="detail-<%= user.username %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -144,15 +146,24 @@
                                   </button>
                                 </div>
                                 <div class="modal-body">
-                                  <table>
-                                     <tr>
-                                        <td><%= user.id %></td>
-                                        <td><%= user.name %></td>
-                                        <td><%= user.username %></td>
-                                        <td><%= user.email %></td>
-                                        <td><%= moment(user.created_at).format('DD/MM/YYYY') %></td>
-                                     </tr>
-                                  </table>
+                                    <div class="card-body table-responsive p-0">
+                                        <table class="table">
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Name</th>
+                                                <th>Username</th>
+                                                <th>Email</th>
+                                                <th>CreatedAt</th>                                                            
+                                              </tr>
+                                            <tr>
+                                                <td><%= user.id %></td>
+                                                <td><%= user.name %></td>
+                                                <td><%= user.username %></td>
+                                                <td><%= user.email %></td>
+                                                <td><%= moment(user.created_at).format('DD/MM/YYYY') %></td>
+                                             </tr>
+                                        </table>
+                                    </div>
                                 </div>     
                                 <div class="modal-footer">
                                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -162,7 +173,7 @@
                           </div>
                         </td>
                         <td>
-                            <button type="button" class="my-3 btn btn-primary" data-toggle="modal" data-target="#<%= user.username %>">
+                            <button type="button" class=" btn btn-primary" data-toggle="modal" data-target="#<%= user.username %>">
                               Edit
                             </button>
 
@@ -182,7 +193,8 @@
                                         <table>
                                            <tr> 
                                                <td>
-                                                 <div class="input-group mb-3">
+                                                 <label>Name :</label>
+                                                 <div class="input-group mb-3"> 
                                                   <input type="text" name="name" class="form-control" placeholder="Full name" value="<%= user.name %>">
                                                   <div class="input-group-append input-group-text">
                                                       <span class="fas fa-user"></span>
@@ -193,7 +205,8 @@
 
                                            <tr>
                                              <td>
-                                                <div class="input-group mb-3">
+                                                <label>Username :</label>
+                                                <div class="input-group mb-3">                                                    
                                                     <input type="text" name="username" class="form-control" placeholder="User name" value="<%= user.username %>" readonly>
                                                     <div class="input-group-append input-group-text">
                                                         <span class="fas fa-user"></span>
@@ -204,7 +217,8 @@
 
                                            <tr>                                   
                                              <td>
-                                               <div class="input-group mb-3">
+                                               <label>Email: </label>
+                                               <div class="input-group mb-3">                                                
                                                 <input type="email" name="email" class="form-control" placeholder="Email" value="<%= user.email %>">
                                                 <div class="input-group-append input-group-text">
                                                     <span class="fas fa-envelope"></span>
@@ -215,7 +229,7 @@
 
                                         </table>
                                         <div class="modal-footer">
-                                          <button type="submit" class="my-3 btn btn-primary">Save</button>
+                                          <button type="submit" class=" btn btn-primary">Save</button>
                                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                         </div>
                                       </form>
@@ -225,7 +239,7 @@
                             </div>
                         </td> 
                         <td>
-                          <button type="button" class="my-3 btn btn-danger" data-toggle="modal" data-target="#delete-<%= user.username %>">
+                          <button type="button" class=" btn btn-danger" data-toggle="modal" data-target="#delete-<%= user.username %>">
                             Delete
                           </button>
 
@@ -241,7 +255,7 @@
                                 </div>
 
                                 <div class="modal-body">
-                                    <form method="POST" action="/admin/users/delete/<%= user.username %>" enctype="application/x-www-form-urlencoded">
+                                    <form method="POST" action="/admin/users/delete/<%= user.id %>" enctype="application/x-www-form-urlencoded">
                                       <input type="hidden" name="_method" value="DELETE">                                         
                                       <button type="submit" class="btn btn-danger">Delete</button>
                                     </form>

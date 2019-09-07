@@ -1,0 +1,71 @@
+<% layout('../../layouts/client/client.ejs') -%>
+<% stylesheet('/stylesheets/style.css') -%>
+<% stylesheet('https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css') -%>
+<% stylesheet('https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css') -%>
+
+<header class="masthead" style="background-image: url('images/home-bg.jpg')">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="site-heading">
+          <h1>Client</h1>
+          <span class="subheading">Page displaying product</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+  <!-- Main Content -->
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto">    
+      <div class="post-preview wow slideInLeft" data-wow-duration="1s">
+        <a href="/post">
+          <h2 class="post-title">
+            Here are our product
+          </h2>
+          <h3 class="post-subtitle">
+            It looks good then we should do something with it
+          </h3>
+        </a>
+        <p class="post-meta">Posted by
+          <a href="#">Start Bootstrap</a>
+          on September 24, 2019</p>
+      </div>
+      <hr>
+
+      <p style="color:green; text-transform: capitalize"><%= updated %></p>
+      <p style="color:red; text-transform: capitalize"><%= handlerError('pr_name')%></p>
+      <p style="color:red; text-transform: capitalize"><%= handlerError('price') %></p>
+      <p style="color:red; text-transform: capitalize"><%= handlerError('description') %></p>
+      <% products.forEach(product => { if (user.id === product.author_id) { %>
+      <div class="post wow bounceInUp" data-wow-duration="1.5s">         
+        <a href="#"><h2 class="post-title">Product name : <span class="text-muted"><%= product.pr_name %></span></h2></a>
+        <a><h3 class="post-subtitle">Description : <span class="text-muted"><%= product.description %></span></h3></a>
+        <a><h3 class="post-subtitle">Price : <span class="text-muted"><%= product.price %></span></h3></a>              
+        <div>
+            <% images.forEach(image => { if (image.product_id === product.id) {%>
+              <img class="py-2 product-img" src="<%= image.url %>" alt="">
+            <%} }) %>  
+        </div> 
+        
+        <p class="post-meta">Posted by
+          <a href="#">Start Bootstrap</a>
+          on September 24, 2019</p>
+      </div>
+      <hr>
+      <% }})%>
+      <!-- Pager -->
+      <div class="clearfix">
+        <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>
+      </div>
+    </div>
+  </div>
+</div>
+<hr>
+
+<% script('/dist/js/demo.js') -%>
+<% script('/dist/js/main.js') -%>
+

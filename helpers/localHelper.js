@@ -9,7 +9,7 @@ const localHelper = (res) => {
         if (errors.length) {
             for (let i = 0; i < errors.length; i++) {
                 if (errors[i].param === key) {
-                    msg = errors[i].msg;
+                    msg = `<p style="color:red; text-transform: capitalize">${errors[i].msg}</p>`;
                     break;
                 }
             }

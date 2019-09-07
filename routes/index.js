@@ -1,89 +1,107 @@
-const express = require('express');
-const multer  = require('multer');
-const path    = require('path');
-const knex    = require('../database/connection');
+const express  = require('express');
+const multer   = require('multer');
+const path     = require('path');
+const passport = require('passport');
 
 const router         = express.Router();
 const authMiddleware = require('../middleware/authentication');
 const validator      = require('../validation/validator');
 
-const login       = require('../controller/Login/loginController');
-const register    = require('../controller/Register/registerController');
-const user        = require('../controller/Users/userController');
-const productType = require('../controller/ProductTypes/productTypesController');
-const product     = require('../controller/Products/productController');
+const login       = require('../controller/Login/client/controller/loginController');
+const register    = require('../controller/Register/client/controller/registerController');
+const users       = require('../controller/Users/admin/controller/userController');
+const productType = require('../controller/Products/admin/controller/productTypesController');
+const product     = require('../controller/Products/admin/controller/productController');
+const category    = require('../controller/Posts/admin/controller/categoryController');
+const post        = require('../controller/Posts/admin/controller/postController');
+const tag         = require('../controller/Posts/admin/controller/tagController');
 
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'upload')
+  destination: (req, file, cb) => {
+    cb(null, 'upload');
   },
-  filename: function (req, file, cb) {
-    cb(null, file.fieldname + '-' + Date.now()+ path.extname(file.originalname))
+  filename: (req, file, cb) => {
+    cb(null, file.fieldname + '-' + Date.now()+ path.extname(file.originalname));
   }
 })
 const upload = multer({ storage });
 
 // Admin router
 /* GET home page. */
-router.get('/', (req, res) => {
-  res.redirect('/admin/login');
-});
+router.get('/', authMiddleware.verifyAuth, product.admin);
 
-router.get('/admin', authMiddleware.verifyAuth, async (req, res) => {
-  const { user } = req.session; 
-  const products = await knex('products').select('*');
-  const images = await knex('images').select('*');
-  const types = await knex('product_types').select('*');
-  const { updated } = res.locals;
-  return res.render('app/admin/index', {
-     user, products, images, types, updated
-  });
-});
-
-router.route('/admin/login')
-        .get(authMiddleware.verifyNotAuth, (req, res) => {
-  return res.render('app/admin/login');
-})
-        .post(validator.checkLogin, login.checkinAccount);
-
-router.route('/admin/register')
-        .get(authMiddleware.verifyNotAuth, (req, res) => {
-  res.render('app/admin/register');
-})
-        .post(validator.checkRegister, register.createAccount);
-
-router.get('/admin/general', (req, res) => {
+router.get('/general', (req, res) => {
   res.render('app/admin/general');
 });
 
-router.get('/admin/simple', (req, res) => {
+router.get('/simple', (req, res) => {
   res.render('app/admin/simple');
 });
 
-router.get('/admin/logout', (req, res) => {
+router.get('/logout', (req, res) => {
   delete req.session.user;
+  delete req.session.passport;
   return res.redirect('/admin/login');
 });
 
 // Manage with users
-router.get('/admin/users', user.userSearching);
+router.get('/users', authMiddleware.verifyAuth, users.searchUser);
 
-router.post('/admin/users/create', user.userCreate);
+router.post('/users/create', users.createUser);
 
-router.put('/admin/users/edit/:username', user.userUpdate);
+router.put('/users/edit/:username', users.updateUser);
 
-router.delete('/admin/users/delete/:username', user.userDelete);
+router.delete('/users/delete/:id', users.deleteUser);
 
 // Manage with products
+router.get('/', authMiddleware.verifyAuth, product.searchProduct);
 
-router.get('/admin/products', authMiddleware.verifyAuth, productType.displayProductType);
+router.get('/products', authMiddleware.verifyAuth, productType.displayProductView);
 
-router.post('/admin/products/create_prtype', productType.createProductType);
+router.get('/products/:slug', authMiddleware.verifyAuth, productType.viewProductType);
 
-router.post('/admin/products/create_product', upload.array('avatar', 10), product.createProduct);
+router.post('/products/create_prtype', productType.createProductType);
 
-router.delete('/admin/products/delete/:slug', product.deleteProduct);
+router.post('/products/create_product', upload.array('avatar', 10), validator.checkProduct, product.createProduct);
 
-router.post('/admin/products/update/:slug', upload.array('avatar', 10), product.updateProduct);
+router.post('/products/update/:slug', upload.array('updateAvatar', 10), product.updateProduct);
+
+router.delete('/products/delete/:slug', product.deleteProduct);
+
+// Manage with category
+router.get('/category', authMiddleware.verifyAuth, category.viewCategory);
+
+router.post('/category/create', category.createCategory);
+
+router.put('/category/update/:slug', category.updateCategory);
+
+router.delete('/category/delete/:slug', category.deleteCategory);
+
+// Manage with posts
+
+router.get('/posts', authMiddleware.verifyAuth, post.overViewPost);
+
+router.post('/posts/create', validator.checkPost, post.createPost);
+
+router.post('/posts/image', upload.single('file'), post.uploadImagePost);
+
+router.get('/posts/view', authMiddleware.verifyAuth, post.viewTitlePost);
+
+router.get('/posts/view/:slug', authMiddleware.verifyAuth, post.viewPost);
+
+router.get('/posts/update/:slug', authMiddleware.verifyAuth, post.viewUpdatePost);
+
+router.put('/posts/update/:slug', post.updatePost);
+
+// Manage with tags
+
+router.get('/tags', authMiddleware.verifyAuth, tag.overViewTag);
+
+router.post('/tags/create', tag.createTag);
+
+router.put('/tags/update/:slug', tag.updateTag);
+
+router.delete('/tags/delete/:slug', tag.deleteTag);
+
 
 module.exports = router;

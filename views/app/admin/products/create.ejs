@@ -24,13 +24,13 @@
                         </select>
                         <label for="productType">Product name</label>
                         <input type="text" class="form-control" name="pr_name" id="productName" placeholder="Enter product name">
-                        <p style="color:red; text-transform: capitalize"><%= handlerError('pr_name')%></p>
+                        <%- handlerError('pr_name') %>
                         <label for="productType">Price</label>
                         <input type="text" class="form-control" name="price" id="productPrice" placeholder="Ex : 10000000">
-                        <p style="color:red; text-transform: capitalize"><%= handlerError('price') %></p>
+                        <%- handlerError('price') %>
                         <label for="productType">Description</label>
                         <textarea type="text" class="form-control" name="description" id="productDescrip" placeholder="Some description"></textarea>
-                        <p style="color:red; text-transform: capitalize"><%= handlerError('description') %></p>
+                        <%- handlerError('description') %>
                         <label for="exampleInputFile">File input</label>
                         <div class="pb-3 input-group">
                           <div class="custom-file">
@@ -74,7 +74,7 @@
                 <label for="productType">Product Type</label>
                 <input type="text" class="form-control" name="type" id="productType" placeholder="Enter product type name">
               </div>
-              <p style="color:red; text-transform: capitalize"><%= handlerError('name') %></p>
+              <%- handlerError('name') %>
             </div>          
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

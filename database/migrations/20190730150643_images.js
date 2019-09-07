@@ -4,7 +4,7 @@ exports.up = function(knex) {
     table.increments('id').primary();
     table.string('url',255).notNullable();
     table.integer('product_id').unsigned().notNullable();
-    table.foreign('product_id').references('id').inTable('products');
+    table.foreign('product_id').references('id').inTable('products').onDelete('CASCADE');
   })
 };
 

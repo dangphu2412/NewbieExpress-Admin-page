@@ -1,0 +1,45 @@
+<% layout('../../layouts/client/client.ejs') -%>
+<% stylesheet('/stylesheets/style.css') -%>
+<header class="masthead" style="background-image: url('/images/post-bg.jpg')">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="site-heading">
+          <h1>Client</h1>
+          <span class="subheading">Page displaying product</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+  <!-- Main Content -->
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto">    
+      <p style="color:green; text-transform: capitalize"><%= updated %></p>
+      <p style="color:red; text-transform: capitalize"><%= handlerError('pr_name')%></p>
+      <p style="color:red; text-transform: capitalize"><%= handlerError('price') %></p>
+      <p style="color:red; text-transform: capitalize"><%= handlerError('description') %></p>
+
+      <div class="post">         
+        <h2 class="post-title"><%= post.title%></h2>
+        <hr>
+        <div class="post-content"><%- post.content %></div>
+        <p class="post-meta">Posted by
+                <a href="#"><%= user.name %></a>
+                on September 24, 2019</p>
+      </div>
+      <hr>
+      <!-- Pager -->
+      <div class="clearfix">
+        <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr>
+<% script('/dist/js/demo.js') -%>
+<% script('/dist/js/main.js') -%>

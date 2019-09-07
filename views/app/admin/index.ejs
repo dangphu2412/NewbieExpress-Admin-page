@@ -1,7 +1,5 @@
-<% layout('../.././layouts/admin/app.ejs') -%>
+<% layout('../../layouts/admin/app.ejs') -%>
 <% stylesheet('/stylesheets/style.css') -%>
-<% stylesheet('/dist/css/photoswipe.css') -%>
-<% stylesheet('/dist/css/default-skin.css') -%>
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
@@ -19,7 +17,6 @@
       </div>
     </div><!-- /.container-fluid -->
   </section>
-
   <!-- Main content -->
   <section class="content">
     <div class="container-fluid">
@@ -122,33 +119,32 @@
             <div class="card-body">
               <div class="tab-content">
                 <div class="active tab-pane" id="activity">
-                  
-                 <!-- File hidden in profile.js -->
+                  <!-- File hidden in profile.js -->
                   <div class="post">
-                    <form class="pb-3" action="/admin/products" method="GET">
+                    <a class="pb-3" href="/admin/products">
                       <button class="btn btn-warning">Create new product</button>
-                    </form>
+                    </a>
                   </div>
                   <p style="color:green; text-transform: capitalize"><%= updated %></p>
                   <p style="color:red; text-transform: capitalize"><%= handlerError('pr_name')%></p>
                   <p style="color:red; text-transform: capitalize"><%= handlerError('price') %></p>
                   <p style="color:red; text-transform: capitalize"><%= handlerError('description') %></p>
-                  <% products.forEach(product => { if (user.id === product.author_id) { %>
+                  <% products.forEach(product => { %>
                   <div class="post">         
                     <p class="text-primary">Product name : <span class="text-muted"><%= product.pr_name %></span></p>
                     <p class="text-primary">Description : <span class="text-muted"><%= product.description %></span></p>
                     <p class="text-primary">Price : <span class="text-muted"><%= product.price %></span></p>            
                     <div class="user-block">
-                        <% images.forEach(image => { if (image.product_id === product.id) {%>
-                          <img class="py-2 product-img" src="<%= image.url %>" alt="">
-                        <%} }) %>  
+                      <% images.forEach((img) => { if (img.product_id === product.id ) {%>
+                          <img class="py-2 product-img" src="<%= img.url %>" alt="">
+                      <% }})%>
                     </div> 
 
                     <div class="d-inline">
-                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#update-<%= product.slug %>">
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#update-<%= product.pr_slug %>">
                             Update
                         </button>
-                        <div class="modal fade" id="update-<%= product.slug %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="update-<%= product.pr_slug %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                               <div class="modal-content">
                                 <div class="modal-header">
@@ -158,11 +154,9 @@
                                   </button>
                                 </div> 
                                 <div class="modal-body">
-                                  <form method="POST" action="/admin/products/update/<%= product.slug %>" enctype="multipart/form-data">
+                                  <form method="POST" action="/admin/products/update/<%= product.pr_slug %>" enctype="multipart/form-data">
                                     <label>Product Type</label>
-                                      <% types.forEach(type => { if (type.id === product.product_type_id) { %>
-                                        <input type="text" class="form-control" name="type" value="<%= type.type %>" disabled>
-                                      <% }}) %>
+                                        <input type="text" class="form-control" name="type" value="<%= product.type %>" disabled>
                                     </select>
                                     <label for="productType">Product name</label>
                                     <input type="text" class="form-control" name="pr_name" id="productName" value="<%= product.pr_name%>">
@@ -176,7 +170,7 @@
                                     <label for="exampleInputFile">File input</label>
                                     <div class="pb-3 input-group">
                                       <div class="custom-file">
-                                        <input type="file" multiple name="avatar" class="custom-file-input" id="exampleInputFile">
+                                        <input type="file" multiple name="updateAvatar" class="custom-file-input" id="exampleInputFile">
                                         <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                                       </div>        
                                     </div>
@@ -193,10 +187,10 @@
                     <!-- Update button -->
 
                     <div class="d-inline">
-                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-<%= product.slug %>">
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-<%= product.pr_slug %>">
                             Delete<i class="ml-1 fas fa-times"></i>
                         </button>
-                        <div class="modal fade" id="delete-<%= product.slug %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="delete-<%= product.pr_slug %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                               <div class="modal-content">
                                 <div class="modal-header">
@@ -207,7 +201,7 @@
                                 </div>                                 
                                 <div class="modal-footer">
                                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                  <form method="POST" action="/admin/products/delete/<%= product.slug %>">
+                                  <form method="POST" action="/admin/products/delete/<%= product.pr_slug %>" enctype="application/x-www-form-urlencoded">
                                       <input type="hidden" name="_method" value="DELETE">
                                       <button type="submit" class="btn btn-primary">Delete</button>
                                   </form>
@@ -219,7 +213,7 @@
                     <!-- Delete button -->
                     
                   </div>
-                  <% }})%>
+                  <% })%>
                 </div>
                 <!-- /.tab-pane -->
                 <div class="tab-pane" id="timeline">
@@ -384,7 +378,5 @@
 <% script('/plugins/chart.js/Chart.min.js') -%>
 <% script('/dist/js/demo.js') -%>
 <% script('/dist/js/pages/dashboard3.js') -%>
-<% script('/dist/js/photoswipe.min.js') -%>
-<% script('/dist/js/photoswipe-ui-default.min.js') -%>
 <% script('/dist/js/main.js') -%>
 
