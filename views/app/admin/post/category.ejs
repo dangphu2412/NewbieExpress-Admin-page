@@ -52,92 +52,94 @@
           </div>
           <!--Create new category-->                                  
       </div>
-      <div class="card-body table-responsive p-0">
-        <table class="table">
-            <tr>
-                <th>ID</th>
-                <th>Category Name</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
-            <% categorises.forEach(category => { %>
-            <tr>
-                  <td><%= category.id %></td>
-                  <td><%= category.category_name %></td>
-                  <td>
-                      <button type="button" class="my-3 btn btn-primary" data-toggle="modal" data-target="#<%= category.slug %>">
-                        Edit
-                      </button>
-
-                      <div class="modal fade" id="<%= category.slug %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                          <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>                                           
-                               
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
+      <div class="card">
+        <div class="card-body table-responsive p-0">
+          <table class="table">
+              <tr>
+                  <th>ID</th>
+                  <th>Category Name</th>
+                  <th>Edit</th>
+                  <th>Delete</th>
+              </tr>
+              <% categorises.forEach(category => { %>
+              <tr>
+                    <td><%= category.id %></td>
+                    <td><%= category.category_name %></td>
+                    <td>
+                        <button type="button" class=" btn btn-primary" data-toggle="modal" data-target="#<%= category.slug %>">
+                          Edit
+                        </button>
+  
+                        <div class="modal fade" id="<%= category.slug %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>                                           
+                                 
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="POST" action="/admin/category/update/<%= category.slug %>" enctype="application/x-www-form-urlencoded">
+                                      <input type="hidden" name="_method" value="PUT">    
+                                      <table>
+                                         <tr> 
+                                             <td>
+                                               <label>Category name :</label>
+                                               <div class="input-group mb-3">
+                                                <input type="text" name="category_name" class="form-control" value="<%= category.category_name %>">
+                                              </div>
+                                            </td>
+                                         </tr>  
+          
+                                      </table>
+                                      <div class="modal-footer">
+                                        <button type="submit" class="my-3 btn btn-primary">Save</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                      </div>
+                                    </form>
+                                </div>                   
                               </div>
-                              <div class="modal-body">
-                                  <form method="POST" action="/admin/category/update/<%= category.slug %>" enctype="application/x-www-form-urlencoded">
-                                    <input type="hidden" name="_method" value="PUT">    
-                                    <table>
-                                       <tr> 
-                                           <td>
-                                             <label>Category name :</label>
-                                             <div class="input-group mb-3">
-                                              <input type="text" name="category_name" class="form-control" value="<%= category.category_name %>">
-                                            </div>
-                                          </td>
-                                       </tr>  
-        
-                                    </table>
-                                    <div class="modal-footer">
-                                      <button type="submit" class="my-3 btn btn-primary">Save</button>
-                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    </div>
-                                  </form>
-                              </div>                   
                             </div>
-                          </div>
-                      </div>
-                  </td> 
-                  <!--Update category-->
-                  <td>
-                    <button type="button" class="my-3 btn btn-danger" data-toggle="modal" data-target="#delete-<%= category.slug %>">
-                      Delete
-                    </button>
-      
-                    <div class="modal fade" id="delete-<%= category.slug %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                      <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Are you sure you want to delete this shit ?</h5>                                           
-                           
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-      
-                          <div class="modal-body">
-                              <form method="POST" action="/admin/category/delete/<%= category.slug %>" enctype="application/x-www-form-urlencoded">
-                                <input type="hidden" name="_method" value="DELETE">                                         
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                              </form>
-                          </div>   
-      
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </td> 
+                    <!--Update category-->
+                    <td>
+                      <button type="button" class=" btn btn-danger" data-toggle="modal" data-target="#delete-<%= category.slug %>">
+                        Delete
+                      </button>
+        
+                      <div class="modal fade" id="delete-<%= category.slug %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLongTitle">Are you sure you want to delete this shit ?</h5>                                           
+                             
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+        
+                            <div class="modal-body">
+                                <form method="POST" action="/admin/category/delete/<%= category.slug %>" enctype="application/x-www-form-urlencoded">
+                                  <input type="hidden" name="_method" value="DELETE">                                         
+                                  <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </div>   
+        
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </td> 
-                  <!--Delete category-->
-            </tr> 
-            <% }) %>          
-        </table>                    
+                    </td> 
+                    <!--Delete category-->
+              </tr> 
+              <% }) %>          
+          </table>                    
+        </div>
       </div>
     </section>
     <!-- /.content -->

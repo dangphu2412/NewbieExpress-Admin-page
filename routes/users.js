@@ -6,7 +6,7 @@ const login       = require('../controller/Login/client/controller/loginControll
 const register    = require('../controller/Register/client/controller/registerController');
 const product     = require('../controller/Products/client/controller/productController');
 const post        = require('../controller/Posts/client/controller/postController');
-const validator      = require('../validation/validator');
+const validator   = require('../validation/validator');
 
 const router = express.Router();
 
